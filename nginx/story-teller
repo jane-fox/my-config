@@ -1,0 +1,54 @@
+
+
+server {
+        listen 443 ssl;
+        listen [::]:443 ssl;
+        server_name vulpe.net;
+        root /var/www/wordpress;
+
+        # Add index.php to the list if you are using PHP
+        index index.php index.html index.htm index.nginx-debian.html;
+
+
+    ssl_certificate /etc/letsencrypt/live/vulpe.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/vulpe.net/privkey.pem;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ /index.php?$args;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php7.0-cgi alone:
+                #fastcgi_pass 127.0.0.1:9000;
+                # With php7.0-fpm:
+                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        }
+
+
+}
+
+
+
+server {
+        listen         80;
+        listen         [::]:80;
+        server_name    vulpe.net;
+        return         301 https://vulpe.net$request_uri;
+}
+
+
+
+
+
+
+
+
+
+
+
+
