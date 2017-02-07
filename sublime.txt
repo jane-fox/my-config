@@ -1,0 +1,16 @@
+
+{
+	"font_size": 16,
+	"word_wrap": false,
+	"shift_tab_unindent": true,
+
+
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+    "line_numbers": true,
+    "gutter": true,
+    "margin": 4,
+
+}
