@@ -1,0 +1,25 @@
+
+# This is a temporary file to use while getting SSL certs
+
+# Replace domains and get certs, then switch to a proper config
+
+# https://certbot.eff.org/#ubuntuxenial-nginx
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+
+server {
+	listen 80;
+
+	# Update these two
+	server_name story-game.com text-game.com adventure-text.com;
+	root /var/www/play;
+
+
+
+	# index (default) file to check for
+	index index.php index.html;
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+}

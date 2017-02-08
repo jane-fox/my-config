@@ -1,54 +1,45 @@
 
-
 server {
-        listen 443 ssl;
-        listen [::]:443 ssl;
-        server_name vulpe.net;
-        root /var/www/wordpress;
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	server_name vulpe.net;
+	root /var/www/wordpress;
 
-        # Add index.php to the list if you are using PHP
-        index index.php index.html index.htm index.nginx-debian.html;
+	# index (default) file to check for
+	index index.php index.html;
 
 
-    ssl_certificate /etc/letsencrypt/live/vulpe.net/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/vulpe.net/privkey.pem;
+	ssl_certificate /etc/letsencrypt/live/vulpe.net/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/vulpe.net/privkey.pem;
 
-        location / {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying a 404.
-                try_files $uri $uri/ /index.php?$args;
-        }
+	# Remove insecure SSL3
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
-        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-        location ~ \.php$ {
-                include snippets/fastcgi-php.conf;
 
-                # With php7.0-cgi alone:
-                #fastcgi_pass 127.0.0.1:9000;
-                # With php7.0-fpm:
-                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-        }
+	# Try finding base files before checking for php
+	location / {
+		try_files $uri $uri/ /index.php?$args;
+	}
+
+	# send php requests to php fpm
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+	}
 
 
 }
 
 
-
+# Redirect HTTP traffic to HTTPS
 server {
-        listen         80;
-        listen         [::]:80;
-        server_name    vulpe.net;
-        return         301 https://vulpe.net$request_uri;
+	listen         80;
+	listen         [::]:80;
+
+	# Include wildcards incase someone types www or something (must be set in dns too)
+	server_name    *.vulpe.net
+
+	# host returns request matching server so it will go to https of requested domain
+	return         301 https://$host$request_uri;
 }
-
-
-
-
-
-
-
-
-
-
-
 
