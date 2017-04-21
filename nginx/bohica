@@ -2,15 +2,15 @@
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
-	server_name vulpe.net;
+	server_name bohicacostumes.com;
 	root /var/www/wordpress;
 
 	# index (default) file to check for
 	index index.php index.html;
 
 
-	ssl_certificate /etc/letsencrypt/live/vulpe.net/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/vulpe.net/privkey.pem;
+	ssl_certificate /etc/letsencrypt/live/bohicacostumes.com/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/bohicacostumes.com/privkey.pem;
 
 	# Remove insecure SSL3
 	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -37,7 +37,7 @@ server {
 	listen         [::]:80;
 
 	# Include wildcards incase someone types www or something (must be set in dns too)
-	server_name    *.vulpe.net
+	server_name    *.bohicacostumes.com
 
 	# host returns request matching server so it will go to https of requested domain
 	return         301 https://$host$request_uri;
