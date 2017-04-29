@@ -31,15 +31,24 @@ server {
 }
 
 
+# www.domain to non-www
+server {
+	listen         443;
+	listen         [::]:443;
+
+	# Include wildcards incase someone types www or something (must be set in dns too)
+	server_name    www.bohicacostumes.com;
+
+	return         301 https://bohicacostumes.com$request_uri;
+}
+
 # Redirect HTTP traffic to HTTPS
 server {
 	listen         80;
 	listen         [::]:80;
 
-	# Include wildcards incase someone types www or something (must be set in dns too)
-	server_name    *.bohicacostumes.com
+	server_name    bohicacostumes.com www.bohicacostumes.com;
 
-	# host returns request matching server so it will go to https of requested domain
-	return         301 https://$host$request_uri;
+	return         301 https://bohicacostumes.com$request_uri;
 }
 
