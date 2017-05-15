@@ -1,14 +1,12 @@
 
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+
 apt update
 
-apt install nginx php mariadb-server fail2ban
+apt install nginx mariadb-server fail2ban php php-gd php-fpm php-mysql
 
 mysql_secure_installation
-
-apt install php-gd php-fpm php-mysql
-
-
-
 
 edit nginx sites-available
 
