@@ -18,3 +18,4 @@ git clone https://github.com/WordPress/WordPress.git
 
 git checkout 4.7-branch
 
+chown www-data wordpress -R
